@@ -6,7 +6,7 @@ class MockSongRepository extends SongRepository {
 
   @override
   Future<Song> addSong({required String title, required String artist}) {
-    return Future.delayed(Duration(seconds: 1), () {
+    return Future.delayed(const Duration(seconds: 1), () {
       Song newSong = Song(id: "0", title: title, artist: artist);
       songs.add(newSong);
       return newSong;
@@ -15,6 +15,6 @@ class MockSongRepository extends SongRepository {
 
   @override
   Future<List<Song>> getSongs() {
-    return Future.delayed(Duration(seconds: 1), () => songs);
+    return Future.delayed(const Duration(seconds: 1), () => songs);
   }
 }

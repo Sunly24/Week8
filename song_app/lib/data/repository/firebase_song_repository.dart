@@ -8,7 +8,8 @@ import '../models/song_dto.dart';
 import 'song_repository.dart';
 
 class FirebaseSongRepository extends SongRepository {
-  static const String baseUrl = 'YOUR URL';
+  static const String baseUrl =
+      'https://mobileapp-3bfbc-default-rtdb.asia-southeast1.firebasedatabase.app';
   static const String songsCollection = "songs";
   static const String allSongsUrl = '$baseUrl/$songsCollection.json';
 
@@ -26,13 +27,13 @@ class FirebaseSongRepository extends SongRepository {
 
     // Handle errors
     if (response.statusCode != HttpStatus.ok) {
-      throw Exception('Failed to add song');
+      throw Exception('Failed to add song. Status: ${response.statusCode}');
     }
 
     // Firebase returns the new ID in 'name'
     final newId = json.decode(response.body)['name'];
 
-    // Return created user
+    // Return created song
     return Song(id: newId, title: title, artist: artist);
   }
 
@@ -47,7 +48,7 @@ class FirebaseSongRepository extends SongRepository {
       throw Exception('Failed to load');
     }
 
-    // Return all users
+    // Return all songs
     final data = json.decode(response.body) as Map<String, dynamic>?;
 
     if (data == null) return [];

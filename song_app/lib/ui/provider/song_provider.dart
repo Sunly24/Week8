@@ -23,7 +23,7 @@ class SongProvider extends ChangeNotifier {
       songsState = AsyncValue.loading();
       notifyListeners();
 
-      // 2 - Fetch users
+      // 2 - Fetch songs
       songsState = AsyncValue.success(await _repository.getSongs());
 
       print("SUCCESS: list size ${songsState!.data!.length.toString()}");
@@ -41,7 +41,7 @@ class SongProvider extends ChangeNotifier {
     // 1- Call repo to add
     _repository.addSong(title: title, artist: artist);
 
-    // 2- Call repo to fetch
+    // 2- Fetch songs
     fetchSongs();
   }
 }

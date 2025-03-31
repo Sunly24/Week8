@@ -15,8 +15,8 @@ void main() async {
   runApp(
     ChangeNotifierProvider(
       create: (context) => SongProvider(songRepository),
-      child: MaterialApp(
-          debugShowCheckedModeBanner: false, home: const HomeScreen()),
+      child: const MaterialApp(
+          debugShowCheckedModeBanner: false, home: HomeScreen()),
     ),
   );
 }
