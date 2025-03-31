@@ -39,7 +39,15 @@ class SongProvider extends ChangeNotifier {
 
   void addSong(String title, String artist) async {
     // 1- Call repo to add
-    _repository.addSong(title: title, artist: artist);
+    await _repository.addSong(title: title, artist: artist);
+
+    // 2- Fetch songs
+    fetchSongs();
+  }
+
+  void removeSong(String id) async {
+    // 1- Call repo to remove
+    await _repository.removeSong(id);
 
     // 2- Fetch songs
     fetchSongs();

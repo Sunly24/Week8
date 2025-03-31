@@ -56,4 +56,19 @@ class FirebaseSongRepository extends SongRepository {
         .map((entry) => SongDto.fromJson(entry.key, entry.value))
         .toList();
   }
+
+  @override
+  Future<void> removeSong(String id) async {
+    Uri uri = Uri.parse('$baseUrl/$songsCollection/$id.json');
+    try {
+      final http.Response response = await http.delete(uri);
+
+      if (response.statusCode != HttpStatus.ok) {
+        throw Exception(
+            'Failed to delete song. Status: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Failed to delete song: $e');
+    }
+  }
 }

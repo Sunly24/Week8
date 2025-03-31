@@ -33,7 +33,8 @@ class HomeScreen extends StatelessWidget {
               subtitle: Text(songs[index].artist),
               trailing: IconButton(
                   icon: const Icon(Icons.delete, color: Colors.red),
-                  onPressed: () => {}),
+                  onPressed: () =>
+                      _removeSong(context, songProvider, songs[index])),
             ),
           ),
         );
@@ -61,6 +62,36 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Colors.blue,
         child: const Icon(Icons.add, color: Colors.white),
       ),
+    );
+  }
+
+  Future<void> _removeSong(
+      BuildContext context, SongProvider songProvider, Song song) async {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Delete Song'),
+          content: Text('Are you sure you want to delete "${song.title}"?'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Cancel', style: TextStyle(color: Colors.grey)),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                songProvider.removeSong(song.id);
+                Navigator.of(context).pop();
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+                foregroundColor: Colors.white,
+              ),
+              child: const Text('Delete'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

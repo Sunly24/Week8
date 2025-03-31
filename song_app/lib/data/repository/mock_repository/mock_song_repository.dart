@@ -17,4 +17,11 @@ class MockSongRepository extends SongRepository {
   Future<List<Song>> getSongs() {
     return Future.delayed(const Duration(seconds: 1), () => songs);
   }
+
+  @override
+  Future<void> removeSong(String id) {
+    return Future.delayed(const Duration(seconds: 1), () {
+      songs.removeWhere((song) => song.id == id);
+    });
+  }
 }
