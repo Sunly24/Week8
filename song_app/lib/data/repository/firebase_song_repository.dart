@@ -17,7 +17,7 @@ class FirebaseSongRepository extends SongRepository {
   Future<Song> addSong({required String title, required String artist}) async {
     Uri uri = Uri.parse(allSongsUrl);
 
-    // Create a new data
+    // Create a new song data
     final newSongData = {'title': title, 'artist': artist};
     final http.Response response = await http.post(
       uri,

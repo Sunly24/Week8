@@ -39,17 +39,27 @@ class SongProvider extends ChangeNotifier {
 
   void addSong(String title, String artist) async {
     // 1- Call repo to add
-    await _repository.addSong(title: title, artist: artist);
+    Song newSong = await _repository.addSong(title: title, artist: artist);
 
-    // 2- Fetch songs
-    fetchSongs();
+    // 2- Update
+    if (hasData) {
+      List<Song> updatedSongs = List<Song>.from(songsState!.data!);
+      updatedSongs.add(newSong);
+      songsState = AsyncValue.success(updatedSongs);
+      notifyListeners();
+    }
   }
 
   void removeSong(String id) async {
+    // 2- Fetch songs
+    if (hasData) {
+      List<Song> songs = List<Song>.from(songsState!.data!);
+      List<Song> updatedSongs = songs.where((song) => song.id != id).toList();
+      songsState = AsyncValue.success(updatedSongs);
+      notifyListeners();
+    }
+
     // 1- Call repo to remove
     await _repository.removeSong(id);
-
-    // 2- Fetch songs
-    fetchSongs();
   }
 }
